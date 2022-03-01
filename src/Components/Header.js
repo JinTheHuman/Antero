@@ -19,9 +19,9 @@ const Header = ({stage}) => {
 
   )
 }
+
 Header.defaultProps = {
   stage: 'Finish Retro',
 }
-
 
 export default Header
