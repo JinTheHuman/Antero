@@ -1,0 +1,41 @@
+.header {
+  height: 100px;
+  border-bottom: gray 1px solid;
+  display: flex;
+  align-items: center;
+  margin: 0%;
+}
+
+.gonext {
+  background-color: blue;
+  width: 112px;
+  height: 36px;
+  align-items: center;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 60px;
+  font-size: 15px;
+}
+
+.stage-bar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: rgba(160, 160, 160, 10) solid;
+  align-items: center;
+}
+
+a {
+  padding: 10px;
+  color: gray;
+}
+
+.Hi {
+  border-bottom: blue solid 2px;
+  color: black;
+}
+
+span {
+  color: gray;
+}
