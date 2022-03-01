@@ -7,7 +7,7 @@ const Header = ({stage}) => {
         <button className='gonext'>{stage}</button>
       </div>
       <div className='stage-bar'>
-        <a className={'brainstorm-stage', (stage=='Finish Retro' ? 'Hi': '')} >Brainstorm</a>
+        <a className={'brainstorm-stage', (stage==='Finish Retro' ? 'Hi': '')} >Brainstorm</a>
         <span>-></span>
         <a className='brainstorm-stage'>Group & Vote</a>
         <span>-></span>
