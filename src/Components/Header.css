@@ -8,15 +8,18 @@
 
 .gonext {
   background-color: blue;
-  width: 112px;
-  height: 36px;
   align-items: center;
   border-radius: 5px;
   color: white;
   cursor: pointer;
+  font-size: 18px;
+
   margin-left: auto;
-  margin-right: 60px;
-  font-size: 15px;
+  margin-right: 100px;
+
+  padding: 10px;
+
+  user-select: none;
 }
 
 .stage-bar {
@@ -31,11 +34,11 @@ a {
   color: gray;
 }
 
-.Hi {
+.current {
   border-bottom: blue solid 2px;
   color: black;
 }
 
-span {
+.arrow {
   color: gray;
 }
