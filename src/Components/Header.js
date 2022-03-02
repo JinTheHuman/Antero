@@ -1,6 +1,6 @@
 import './Header.css';
 
-const Header = ({stage}) => {
+const Header = ({stage, changeState}) => {
   var buttonText;
   switch(stage) {
     case 1:
@@ -22,7 +22,7 @@ const Header = ({stage}) => {
   return (
     <>
       <div className="header">
-        <span className='gonext'>{buttonText}</span>
+        <span className='gonext' onClick={changeState}>{buttonText}</span>
       </div>
       <div className='stage-bar'>
         <a className={'brainstorm-stage', (stage==1 ? 'current': '')} >Brainstorm</a>
