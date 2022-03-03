@@ -22,7 +22,12 @@ const Header = ({stage, changeState}) => {
   return (
     <>
       <div className="header">
-        <span className='gonext' onClick={changeState}>{buttonText}</span>
+          <img src="" alt="Insert Logo Here" />
+          <div style={{display: "inline-block"}} className="left-side-header">
+            <span className='gonext' onClick={changeState}>
+              {buttonText}
+            </span>
+          </div>
       </div>
       <div className='stage-bar'>
         <a className={'brainstorm-stage', (stage==1 ? 'current': '')} >Brainstorm</a>
