@@ -1,8 +1,10 @@
 import Header from "./Components/Header";
+import Comment from "./Components/Comment"
 import React, {useState} from 'react'
 
 function App() {
-
+  const [comments, setComments] = useState([{id: 0, text: "test1", likes: 0},
+                   {id: 1, text: "test2", likes: 0}]);
   const [stage, setStage] = useState(1);
   const [improvements, setImprovements] = useState([{id: 0, text: "test1", likes: 0}]);
   const [questions, setQuestions] = useState([{id: 1, text: "test1", likes: 0}]);
@@ -18,13 +20,14 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       <Header stage={stage} changeState={changeState}/>
       <div className="Columns">
         <div>One</div>
         <div>Two</div>
         <div>Three</div>
         <div>Four</div>
+        <Comment comments={comments}/>
       </div>
     </div>
   );
