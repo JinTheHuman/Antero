@@ -1,0 +1,7 @@
+.Comment {
+  border: solid black 2px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 16px;
+}

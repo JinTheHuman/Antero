@@ -1,11 +1,17 @@
 import Comment from './Comment'
 
-const Comments = ({comments, onClicked}) => {
+const Comments = ({comments, onClicked, onDelete}) => {
 
     return (
       <>
           {comments.map((comments) => (
-            <Comment className="Comment" key={comments.id} comment={comments} onClicked={onClicked}/>))}
+            <Comment
+             className="Comment" 
+             key={comments.id} 
+             comment={comments} 
+             onClicked={onClicked} 
+             onDelete = {onDelete}
+            />))}
       </>
     )
   }
