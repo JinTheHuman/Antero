@@ -1,11 +1,14 @@
+import React from 'react'
 
-const Comment = ({comments}) => {
 
+ const Comment = ({comment, onClicked}) => {
   return (
-    <>
-        {comments.map((comments) => (<h3 key={comments.id}>{comments.text}</h3>))}
-    </>
+    <div>
+        <p>#{comment.id}</p>
+        <h3>{comment.text}</h3>
+        <button onClick={onClicked}>Like</button>
+        <p>{comment.likes}</p>
+    </div>
   )
 }
-
 export default Comment

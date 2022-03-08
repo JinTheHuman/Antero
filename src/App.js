@@ -1,5 +1,5 @@
 import Header from "./Components/Header";
-import Comment from "./Components/Comment"
+import Comments from "./Components/Comments"
 import React, {useState} from 'react'
 
 function App() {
@@ -19,6 +19,11 @@ function App() {
     }
   }
 
+  const clicked = (id) => {
+    console.log("hek")
+    setComments(comments.map((comments) => comments.id === id ? { ...comments, likes: comments.likes + 1} : comments))
+  }
+
   return (
     <div>
       <Header stage={stage} changeState={changeState}/>
@@ -27,7 +32,7 @@ function App() {
         <div>Two</div>
         <div>Three</div>
         <div>Four</div>
-        <Comment comments={comments}/>
+        <Comments comments={comments} onClicked={clicked}/>
       </div>
     </div>
   );
