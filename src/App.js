@@ -1,4 +1,5 @@
 import Header from "./Components/Header";
+import Column from "./Components/Column";
 import Comments from "./Components/Comments"
 import React, {useState} from 'react'
 
@@ -93,6 +94,10 @@ function App() {
     <div>
       <Header stage={stage} changeState={changeState}/>
       <div className="Columns">
+        <Column topic={"It worked well that..."}/>
+        <Column topic={"We could improve..."}/>
+        <Column topic={"I want to ask about..."}/>
+        <Column topic={"We need to do..."}/>
         <div>Worked well
           <Comments comments={workedWell} onClicked={likedComment} onDelete={deleteComment}/>
         </div>
@@ -103,7 +108,6 @@ function App() {
           <Comments comments={questions} onClicked={likedComment} onDelete={deleteComment}/>
         </div>
         <div>To Do</div>
-        
       </div>
       
     </div>
