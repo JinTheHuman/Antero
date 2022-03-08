@@ -39,7 +39,7 @@
   height: 20px;
   width: 20px;
   border: solid black 1px;
-  box-sizing: ;
+  box-sizing: border-box;
 }
 
 .stage-bar {
