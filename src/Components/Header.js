@@ -42,9 +42,9 @@ const Header = ({stage, changeState}) => {
 
   )
 }
+
 Header.defaultProps = {
   stage: 1,
 }
-
 
 export default Header

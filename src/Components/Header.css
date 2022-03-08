@@ -5,6 +5,7 @@
   margin: 0%;
   padding: 12px 16px;
   box-sizing: border-box;
+  justify-content: space-between;
 }
 
 .left-side-header {
@@ -39,7 +40,7 @@
   height: 20px;
   width: 20px;
   border: solid black 1px;
-  box-sizing: ;
+  box-sizing: border-box;
 }
 
 .stage-bar {
