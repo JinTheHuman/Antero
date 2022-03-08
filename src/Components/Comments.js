@@ -5,9 +5,9 @@ const Comments = ({comments, onClicked}) => {
     return (
       <>
           {comments.map((comments) => (
-            <Comment key={comments.id} comment={comments} onClicked={onClicked}/>))}
+            <Comment className="Comment" key={comments.id} comment={comments} onClicked={onClicked}/>))}
       </>
     )
   }
   
-  export default Comments
+export default Comments

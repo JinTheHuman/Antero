@@ -20,8 +20,9 @@ function App() {
   }
 
   const clicked = (id) => {
-    console.log("hek")
-    setComments(comments.map((comments) => comments.id === id ? { ...comments, likes: comments.likes + 1} : comments))
+    console.log({comments})
+    
+    setComments(comments.map((comment) => comment.id === id ? { ...comment, likes: comment.likes + 1} : comment))
   }
 
   return (
