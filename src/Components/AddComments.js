@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const CommentBoxes = ({ topic }) => {
+const AddComments = ({ topic }) => {
     const [text, setText] = useState('')
 
     /*
@@ -27,4 +27,4 @@ const CommentBoxes = ({ topic }) => {
     )
 }
 
-export default CommentBoxes
+export default AddComments

@@ -1,4 +1,6 @@
 import Header from "./Components/Header";
+import Column from "./Components/Column";
+
 import React, {useState} from 'react'
 
 function App() {
@@ -21,10 +23,10 @@ function App() {
     <div className="App">
       <Header stage={stage} changeState={changeState}/>
       <div className="Columns">
-        <div>One</div>
-        <div>Two</div>
-        <div>Three</div>
-        <div>Four</div>
+        <Column topic={"It worked well that..."}/>
+        <Column topic={"We could improve..."}/>
+        <Column topic={"I want to ask about..."}/>
+        <Column topic={"We need to do..."}/>
       </div>
     </div>
   );
