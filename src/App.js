@@ -10,7 +10,7 @@ function App() {
   const [workedWell, setWorkedWell] = useState([{id: 2, text: "test1", likes: 0, column: "workedWell"}, {id: 3, text: "test2", likes: 0, column: "workedWell"}]);
   const [toDo, setToDo] = useState([]);
 
-  const [nextId, setNextId] = useState(0);
+  const [nextId, setNextId] = useState(2);
  
   const changeState = () => {
     if (stage === 4) {
@@ -21,26 +21,26 @@ function App() {
   }
 
 
-  const addImprovement = (text) => {
+  const addImprovement = (inputText) => {
     console.log("adding improvement now")
     setNextId(nextId + 1)
-    const newImprovement = {id: nextId, text: {text}, likes: 0, column: "improvements"}
+    const newImprovement = {id: nextId, text: inputText, likes: 0, column: "improvements"}
     setImprovements([...improvements, newImprovement])
     console.log({improvements})
   }
 
-  const addQuestions = (text) => {
+  const addQuestions = (inputText) => {
     setNextId(nextId + 1)
-    const newQuestion = {id: nextId, text: {text}, likes: 0, column: "questions"}
+    const newQuestion = {id: nextId, text: inputText, likes: 0, column: "questions"}
     setQuestions([...questions, newQuestion])
   }
-  const addWorkedWell = (text) => {
+  const addWorkedWell = (inputText) => {
     setNextId(nextId + 1)
-    const newWorkedWell = {id: nextId, text: {text}, likes: 0, column: "workedWell"}
+    const newWorkedWell = {id: nextId, text: inputText, likes: 0, column: "workedWell"}
     setWorkedWell([...workedWell, newWorkedWell])
   }
-  const addToDo = (text) => {
-    const newToDo = {text: {text}, checked: false, column: "toDo"}
+  const addToDo = (inputText) => {
+    const newToDo = {text: inputText, checked: false, column: "toDo"}
     setToDo([...toDo, newToDo])
   }
 
@@ -91,10 +91,10 @@ function App() {
     <div>
       <Header stage={stage} changeState={changeState}/>
       <div className="Columns">
-        <Column topic={"It worked well that..."}comments={workedWell} onClicked={likedComment} onDelete={deleteComment}/>
-        <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment}/>
-        <Column topic={"I want to ask about..."}comments={questions} onClicked={likedComment} onDelete={deleteComment}/>
-        <Column topic={"We need to do..."}/>
+        <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell}/>
+        <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement}/>
+        <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions}/>
+        <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo}/>
       </div>
       
     </div>
