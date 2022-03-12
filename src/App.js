@@ -9,6 +9,7 @@ function App() {
   const [questions, setQuestions] = useState([{id: 1, text: "test1", likes: 0, column: "questions"}]);
   const [workedWell, setWorkedWell] = useState([{id: 2, text: "test1", likes: 0, column: "workedWell"}, {id: 3, text: "test2", likes: 0, column: "workedWell"}]);
   const [toDo, setToDo] = useState([]);
+  const [isShown, setIsShown] = useState(false);
 
   const [nextId, setNextId] = useState(2);
  
@@ -63,8 +64,9 @@ function App() {
         setToDo(toDo.filter((comment) => comment.id != id));
         console.log(toDo);
         break;
+      default:
+        console.log("broken delete")
     }
-    
   }
 
   const likedComment = (id, column) => {
