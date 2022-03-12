@@ -8,8 +8,9 @@
 
 .like {
   padding-right: 7px;
+  cursor: pointer;
 }
 
 .check-box {
-  align-items: center;
+  margin: auto;
 }

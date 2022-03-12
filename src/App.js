@@ -11,7 +11,7 @@ function App() {
   const [toDo, setToDo] = useState([]);
   const [isShown, setIsShown] = useState(false);
 
-  const [nextId, setNextId] = useState(2);
+  const [nextId, setNextId] = useState(4);
  
   const changeState = () => {
     if (stage === 4) {
