@@ -2,16 +2,19 @@ import React, { useState } from 'react'
 import {FaTimes, FaThumbsUp} from 'react-icons/fa'
 import "./Comment.css"
 
- const Comment = ({comment, onClicked, onDelete}) => {
+const Comment = ({comment, onClicked, onDelete}) => {
   const [isShown, setIsShown] = useState(false);
+  
   return (
     <div className='Comment'
+      // Changes if the cross is visible
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}>
       
-
-      {isShown ? <p><FaTimes class='cross' style={{cursor:'pointer'}} onClick={()=>onDelete(comment.id, comment.column)}/></p> : <p>#{comment.id}</p>}
-      <h3>{comment.text}</h3>
+      {isShown || comment.column === "toDo" ? <p><FaTimes class='cross' style={{cursor:'pointer'}} onClick={()=>onDelete(comment.id, comment.column)}/></p> : 
+        <p>#{comment.id}</p>
+      }
+      {comment.column === "toDo" ? <h3><input type="checkbox"/>{comment.text}</h3>: <h3>{comment.text}</h3>}
       <p>
         <FaThumbsUp class='like' onClick={()=>onClicked(comment.id, comment.column)}/>
         {comment.likes}
