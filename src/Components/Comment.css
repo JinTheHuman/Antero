@@ -2,14 +2,20 @@
   background: #f4f4f4;
   display: flex;
   justify-content: space-between;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 
 .like {
-  padding-right: 7px;
+  padding-right: 0.4vw;
+  cursor: pointer;
+}
+
+.likes {
+  user-select: none;
 }
 
 .check-box {
-  align-items: left;
+  margin-right: auto;
 }
+
