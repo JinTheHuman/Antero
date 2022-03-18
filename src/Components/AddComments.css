@@ -1,8 +1,20 @@
+/*
 .comments {
     display: inline-block;
     margin: 5px;
     padding: 10px 20px;
     border-radius: 5px;
+}
+*/
+input {
+    border-radius: 5px;
+    padding: 1vh;
+    margin: 1.5vh;
+}
+
+input:focus {
+	outline: none;
+  	border: 3px solid rgb(74, 97, 227);
 }
 /*
 .comments:focus {
