@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './AddComments.css';
 
 const AddComments = ({ topic, addComment }) => {
     const [text, setText] = useState('')
