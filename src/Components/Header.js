@@ -1,4 +1,5 @@
 import './Header.css';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const Header = ({stage, changeState}) => {
   var buttonText;
@@ -31,11 +32,11 @@ const Header = ({stage, changeState}) => {
       </div>
       <div className='stage-bar'>
         <a className={'brainstorm-stage', (stage==1 ? 'current': '')} >Brainstorm</a>
-        <span className='arrow'>-></span>
+        <span className='arrow'><AiOutlineArrowRight /></span>
         <a className={'group-stage', (stage==2 ? 'current': '')}>Group & Vote</a>
-        <span className='arrow'>-></span>
+        <span className='arrow'><AiOutlineArrowRight /></span>
         <a className={'add-stage', (stage==3 ? 'current': '')}>Add Action Items</a>
-        <span className='arrow'>-></span>
+        <span className='arrow'><AiOutlineArrowRight /></span>
         <a className={'done-stage', (stage==4 ? 'current': '')}>Done</a>
       </div>
     </>
