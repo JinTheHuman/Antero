@@ -16,5 +16,22 @@
 }
 
 .check-box {
-  margin-left: auto;
+  margin-right: auto;
+  max-height: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 17vw;
+  text-align: left;
+}
+
+.leftObj {
+  min-width: 2vw;
+}
+
+.text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 17vw;
 }
