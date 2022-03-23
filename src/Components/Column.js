@@ -17,6 +17,7 @@ const Column = ({ topic, comments, onClicked, onDelete, addComment }) => {
               comments={comments}
               onClicked={onClicked}
               onDelete={onDelete}
+              provided={provided}
               className="comments"
             />
           )}
