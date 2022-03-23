@@ -8,6 +8,7 @@
 */
 input {
   border-radius: 5px;
+  border: 3px solid transparent;
   padding: 1vh;
   margin: 1.5vh;
 }
