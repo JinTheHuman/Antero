@@ -155,7 +155,7 @@ function App() {
     <div>
       <Header stage={stage} changeState={changeState} />
       <div className="Columns">
-        <DragDropContext>
+        <DragDropContext onDragEnd={() => {}}>
           <Column
             topic={"It worked well that..."}
             comments={workedWell}
@@ -163,6 +163,8 @@ function App() {
             onDelete={deleteComment}
             addComment={addWorkedWell}
           />
+        </DragDropContext>
+        <DragDropContext onDragEnd={() => {}}>
           <Column
             topic={"We could improve..."}
             comments={improvements}
@@ -170,6 +172,8 @@ function App() {
             onDelete={deleteComment}
             addComment={addImprovement}
           />
+        </DragDropContext>
+        <DragDropContext onDragEnd={() => {}}>
           <Column
             topic={"I want to ask about..."}
             comments={questions}
@@ -177,6 +181,8 @@ function App() {
             onDelete={deleteComment}
             addComment={addQuestions}
           />
+        </DragDropContext>
+        <DragDropContext onDragEnd={() => {}}>
           <Column
             topic={"We need to do..."}
             comments={toDo}
