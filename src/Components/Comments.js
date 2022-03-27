@@ -1,19 +1,26 @@
 import Comment from "./Comment";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const Comments = ({ comments, provided, onClicked, onDelete }) => {
+const Comments = ({ comments, onClicked, onDelete }) => {
   return (
-    <>
-      {comments.map((comments) => (
-        <Comment
-          className="Comment"
-          key={comments.id}
-          comment={comments}
-          provided={provided}
-          onClicked={onClicked}
-          onDelete={onDelete}
-        />
-      ))}
-    </>
+    <Droppable droppableId="comments">
+      {(provided) => (
+        <div {...provided.droppableProps} ref={provided.innerRef}>
+          {comments.map((comments, index) => (
+            <Comment
+              className="Comment"
+              key={comments.id}
+              comment={comments}
+              provided={provided}
+              onClicked={onClicked}
+              onDelete={onDelete}
+              index={index}
+            />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };
 

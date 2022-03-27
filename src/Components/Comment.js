@@ -8,17 +8,16 @@ const Comment = ({ comment, onClicked, onDelete }) => {
   const [isShown, setIsShown] = useState(false);
 
   return (
-    <DragDropContext>
       <Draggable
-        key={comment.text}
-        draggableId={comment.text}
+        key={comment.id}
+        draggableId={comment.id}
         index={comment.index}
       >
         {(provided) => (
           <div
+            innerRef={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            ref={provided.innerRef}
             className="Comment"
             // Changes if the cross is visible
             onMouseOver={() => setIsShown(true)}
@@ -57,7 +56,6 @@ const Comment = ({ comment, onClicked, onDelete }) => {
           </div>
         )}
       </Draggable>
-    </DragDropContext>
   );
 };
 export default Comment;

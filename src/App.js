@@ -1,19 +1,44 @@
 import Header from "./Components/Header";
 import Column from "./Components/Column";
 import Comments from "./Components/Comments";
+import { DragDropContext } from "react-beautiful-dnd";
 import React, { useState } from "react";
 
 function App() {
   const [stage, setStage] = useState(1);
   const [improvements, setImprovements] = useState([
-    { id: 0, text: "test1", likes: 0, column: "improvements" },
+    {
+      index: 0,
+      text: "test1",
+      likes: 0,
+      column: "improvements",
+      id: "droppable-0",
+    },
   ]);
   const [questions, setQuestions] = useState([
-    { id: 1, text: "test1", likes: 0, column: "questions" },
+    {
+      index: 1,
+      text: "test1",
+      likes: 0,
+      column: "questions",
+      id: "droppable-1",
+    },
   ]);
   const [workedWell, setWorkedWell] = useState([
-    { id: 2, text: "test1", likes: 0, column: "workedWell" },
-    { id: 3, text: "test2", likes: 0, column: "workedWell" },
+    {
+      index: 2,
+      text: "test1",
+      likes: 0,
+      column: "workedWell",
+      id: "droppable-2",
+    },
+    {
+      index: 3,
+      text: "test2",
+      likes: 0,
+      column: "workedWell",
+      id: "droppable-3",
+    },
   ]);
   const [toDo, setToDo] = useState([]);
 
@@ -130,33 +155,35 @@ function App() {
     <div>
       <Header stage={stage} changeState={changeState} />
       <div className="Columns">
-        <Column
-          topic={"It worked well that..."}
-          comments={workedWell}
-          onClicked={likedComment}
-          onDelete={deleteComment}
-          addComment={addWorkedWell}
-        />
-        <Column
-          topic={"We could improve..."}
-          comments={improvements}
-          onClicked={likedComment}
-          onDelete={deleteComment}
-          addComment={addImprovement}
-        />
-        <Column
-          topic={"I want to ask about..."}
-          comments={questions}
-          onClicked={likedComment}
-          onDelete={deleteComment}
-          addComment={addQuestions}
-        />
-        <Column
-          topic={"We need to do..."}
-          comments={toDo}
-          onDelete={deleteComment}
-          addComment={addToDo}
-        />
+        <DragDropContext>
+          <Column
+            topic={"It worked well that..."}
+            comments={workedWell}
+            onClicked={likedComment}
+            onDelete={deleteComment}
+            addComment={addWorkedWell}
+          />
+          <Column
+            topic={"We could improve..."}
+            comments={improvements}
+            onClicked={likedComment}
+            onDelete={deleteComment}
+            addComment={addImprovement}
+          />
+          <Column
+            topic={"I want to ask about..."}
+            comments={questions}
+            onClicked={likedComment}
+            onDelete={deleteComment}
+            addComment={addQuestions}
+          />
+          <Column
+            topic={"We need to do..."}
+            comments={toDo}
+            onDelete={deleteComment}
+            addComment={addToDo}
+          />
+        </DragDropContext>
       </div>
     </div>
   );
