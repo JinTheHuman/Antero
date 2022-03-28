@@ -40,7 +40,6 @@ const Header = ({stage, changeState}) => {
         <a className={'done-stage', (stage==4 ? 'current': '')}>Done</a>
       </div>
     </>
-
   )
 }
 

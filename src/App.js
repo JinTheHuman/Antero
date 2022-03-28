@@ -1,6 +1,7 @@
 import Header from "./Components/Header";
 import Column from "./Components/Column";
 import Comments from "./Components/Comments"
+import Confirm from "./Components/Confirm";
 import React, {useState} from 'react'
 
 function App() {
@@ -10,17 +11,31 @@ function App() {
   const [workedWell, setWorkedWell] = useState([{id: 2, text: "test1", likes: 0, column: "workedWell"}, {id: 3, text: "test2", likes: 0, column: "workedWell"}]);
   const [toDo, setToDo] = useState([]);
   const [isShown, setIsShown] = useState(false);
-
+  const [showConfirm, setShowConfirm] = useState(false);
   const [nextId, setNextId] = useState(4);
  
-  const changeState = () => {
+  const changeStage = () => {
     if (stage === 4) {
       setStage(1);
     } else {
       setStage(stage + 1);
     }
+    setShowConfirm(false);
   }
 
+  const updateConfirm = () => {
+    if (showConfirm == false) {
+      if (stage === 1 || stage === 2) {
+        console.log("hello");
+        setShowConfirm(true);
+      } else {
+        changeStage();
+      }
+    } else {
+      setShowConfirm(false);
+    }
+
+  }
 
   const addImprovement = (inputText) => {
     console.log("adding improvement now")
@@ -91,14 +106,14 @@ function App() {
   
   return (
     <div>
-      <Header stage={stage} changeState={changeState}/>
+      <Header stage={stage} changeState={updateConfirm}/>
       <div className="Columns">
         <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell} stage={stage}/>
         <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement} stage={stage}/>
         <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions} stage={stage}/>
         <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo} stage={stage}/>
       </div>
-      
+      <Confirm show={showConfirm} stage={stage} changeStage={changeStage} cancel={updateConfirm}></Confirm>
     </div>
   );
 }

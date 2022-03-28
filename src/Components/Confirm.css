@@ -1,0 +1,66 @@
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(51, 51, 51, 0.3);
+  z-index: 2;
+}
+
+.heading {
+  font-size: 18px;
+  margin: 0;
+}
+
+.body-text {
+  margin: 12px 0px 24px;
+}
+
+.confirm-box {
+  display: block;
+
+  width: 500px;
+
+  box-sizing: border-box;
+  background-color: white;
+
+  z-index: 2;
+
+  border-radius: 6px;
+
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 20px;
+
+  box-shadow: rgb(0 0 0 / 16%) 0px 0px 1px, rgb(0 0 0 / 16%) 0px 3px 8px;
+}
+
+.button {
+  background-color: rgb(74, 97, 227);
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 1vh 1vw;
+  height: 36px;
+
+  user-select: none;
+  outline: solid transparent 4px;
+  outline-offset: 1px;
+
+  box-sizing: border-box;
+}
+
+.button:hover {
+  outline: solid lightgray 4px;
+}
+
+.cancel {
+  margin-right: 12px;
+}
