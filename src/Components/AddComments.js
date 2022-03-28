@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './AddComments.css';
 
-const AddComments = ({ topic, addComment }) => {
+const AddComments = ({ topic, addComment, stage }) => {
     const [text, setText] = useState('')
 
     /*
@@ -20,14 +20,15 @@ const AddComments = ({ topic, addComment }) => {
         event.preventDefault();
         addComment(text);
         setText("");
-        
+
     }
-    return (  
+    return (
         <form className='add-comment' onSubmit={(e) => handleSubmit(e)}>
             <div className='comment-control'>
-                <input 
+                <input
                     type='text' placeholder={topic}
                     value={text} onChange={(e) => setText(e.target.value)}
+                    disabled={(topic === "We need to do..." && (stage === 1 || stage === 2)) || (topic !== "We need to do..." && stage === 4) ? true : false}
                 />
             </div>
         </form>

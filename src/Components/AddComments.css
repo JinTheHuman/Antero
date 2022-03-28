@@ -10,6 +10,7 @@ input {
     border-radius: 5px;
     padding: 1vh;
     margin: 1.5vh;
+    border: 3px solid transparent;
 }
 
 input:focus {
