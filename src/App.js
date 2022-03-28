@@ -93,10 +93,10 @@ function App() {
     <div>
       <Header stage={stage} changeState={changeState}/>
       <div className="Columns">
-        <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell}/>
-        <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement}/>
-        <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions}/>
-        <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo}/>
+        <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell} stage={stage}/>
+        <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement} stage={stage}/>
+        <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions} stage={stage}/>
+        <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo} stage={stage}/>
       </div>
       
     </div>

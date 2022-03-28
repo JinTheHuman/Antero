@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './AddComments.css';
 
-const AddComments = ({ topic, addComment }) => {
+const AddComments = ({ topic, addComment, stage }) => {
     const [text, setText] = useState('')
 
     /*
@@ -28,6 +28,7 @@ const AddComments = ({ topic, addComment }) => {
                 <input 
                     type='text' placeholder={topic}
                     value={text} onChange={(e) => setText(e.target.value)}
+                    //{stage} === 4 ? disabled
                 />
             </div>
         </form>

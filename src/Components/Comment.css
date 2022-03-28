@@ -1,6 +1,6 @@
 .Comment {
-  background: #f4f4f4;
   display: flex;
+  background: #f4f4f4;
   justify-content: space-between;
   padding-left: 16px;
   padding-right: 16px;
@@ -12,5 +12,16 @@
 }
 
 .check-box {
-  margin: auto;
+  margin-right: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 18vw;
+}
+
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 18vw;
 }
