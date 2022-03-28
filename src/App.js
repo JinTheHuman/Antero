@@ -1,19 +1,17 @@
 import Header from "./Components/Header";
+import Column from "./Components/Column";
 import Comments from "./Components/Comments"
 import React, {useState} from 'react'
 
 function App() {
-
-  const [comments, setComments] = useState([{id: 0, text: "test1", likes: 0},
-                   {id: 1, text: "test2", likes: 0}]);
-
   const [stage, setStage] = useState(1);
   const [improvements, setImprovements] = useState([{id: 0, text: "test1", likes: 0, column: "improvements"}]);
   const [questions, setQuestions] = useState([{id: 1, text: "test1", likes: 0, column: "questions"}]);
   const [workedWell, setWorkedWell] = useState([{id: 2, text: "test1", likes: 0, column: "workedWell"}, {id: 3, text: "test2", likes: 0, column: "workedWell"}]);
   const [toDo, setToDo] = useState([]);
+  const [isShown, setIsShown] = useState(false);
 
-  const [nextId, setNextId] = useState(0);
+  const [nextId, setNextId] = useState(4);
  
   const changeState = () => {
     if (stage === 4) {
@@ -24,26 +22,26 @@ function App() {
   }
 
 
-  const addImprovement = (text) => {
+  const addImprovement = (inputText) => {
     console.log("adding improvement now")
     setNextId(nextId + 1)
-    const newImprovement = {id: nextId, text: {text}, likes: 0, column: "improvements"}
+    const newImprovement = {id: nextId, text: inputText, likes: 0, column: "improvements"}
     setImprovements([...improvements, newImprovement])
     console.log({improvements})
   }
 
-  const addQuestions = (text) => {
+  const addQuestions = (inputText) => {
     setNextId(nextId + 1)
-    const newQuestion = {id: nextId, text: {text}, likes: 0, column: "questions"}
+    const newQuestion = {id: nextId, text: inputText, likes: 0, column: "questions"}
     setQuestions([...questions, newQuestion])
   }
-  const addWorkedWell = (text) => {
+  const addWorkedWell = (inputText) => {
     setNextId(nextId + 1)
-    const newWorkedWell = {id: nextId, text: {text}, likes: 0, column: "workedWell"}
+    const newWorkedWell = {id: nextId, text: inputText, likes: 0, column: "workedWell"}
     setWorkedWell([...workedWell, newWorkedWell])
   }
-  const addToDo = (text) => {
-    const newToDo = {text: {text}, checked: false, column: "toDo"}
+  const addToDo = (inputText) => {
+    const newToDo = {text: inputText, checked: false, column: "toDo"}
     setToDo([...toDo, newToDo])
   }
 
@@ -66,8 +64,9 @@ function App() {
         setToDo(toDo.filter((comment) => comment.id != id));
         console.log(toDo);
         break;
+      default:
+        console.log("broken delete")
     }
-    
   }
 
   const likedComment = (id, column) => {
@@ -94,17 +93,10 @@ function App() {
     <div>
       <Header stage={stage} changeState={changeState}/>
       <div className="Columns">
-        <div>Worked well
-          <Comments comments={workedWell} onClicked={likedComment} onDelete={deleteComment}/>
-        </div>
-        <div>Improvements
-          <Comments comments={improvements} onClicked={likedComment} onDelete={deleteComment}/>
-        </div>
-        <div>Ask
-          <Comments comments={questions} onClicked={likedComment} onDelete={deleteComment}/>
-        </div>
-        <div>To Do</div>
-        
+        <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell} stage={stage}/>
+        <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement} stage={stage}/>
+        <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions} stage={stage}/>
+        <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo} stage={stage}/>
       </div>
       
     </div>

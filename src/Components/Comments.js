@@ -10,7 +10,7 @@ const Comments = ({comments, onClicked, onDelete}) => {
              key={comments.id} 
              comment={comments} 
              onClicked={onClicked} 
-             onDelete = {onDelete}
+             onDelete={onDelete}
             />))}
       </>
     )
