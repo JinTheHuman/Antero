@@ -1,47 +1,57 @@
 import React, { useState } from "react";
 import { FaTimes, FaThumbsUp } from "react-icons/fa";
 import "./Comment.css";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Comments from "./Comments";
 
 const Comment = ({ comment, onClicked, onDelete }) => {
   const [isShown, setIsShown] = useState(false);
 
   return (
-    <div
-      className="Comment"
-      // Changes if the cross is visible
-      onMouseOver={() => setIsShown(true)}
-      onMouseLeave={() => setIsShown(false)}
-    >
-      {isShown || comment.column === "toDo" ? (
-        <p style={{ minWidth: "2vw"}}>
-          <FaTimes
-            class="cross"
-            style={{ cursor: "pointer" }}
-            onClick={() => onDelete(comment.id, comment.column)}/>
-        </p>
-      ) : (
-        <p style={{ minWidth: "2vw" }}>#{comment.id}</p>
-      )}
+    <Draggable draggableId={comment.id} index={comment.index}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className="Comment"
+          // Changes if the cross is visible
+          onMouseOver={() => setIsShown(true)}
+          onMouseLeave={() => setIsShown(false)}
+        >
+          {isShown || comment.column === "toDo" ? (
+            <p className="leftObj">
+              <FaTimes
+                className="cross"
+                style={{ cursor: "pointer" }}
+                onClick={() => onDelete(comment.id, comment.column)}
+              />
+            </p>
+          ) : (
+            <p className="leftObj">#{comment.index}</p>
+          )}
 
-      {comment.column === "toDo" ? (
-        <h3 class="check-box">
-          <input type="checkbox" />
-          {comment.text}
-        </h3>
-      ) : (
-        <h3 class="text">{comment.text}</h3>
-      )}
+          {comment.column === "toDo" ? (
+            <>
+              <input type="checkbox" />
+              <h3 className="check-box">{comment.text}</h3>
+            </>
+          ) : (
+            <h3 className="text">{comment.text}</h3>
+          )}
 
-      {comment.column !== "toDo" && (
-        <p>
-          <FaThumbsUp
-            class="like"
-            onClick={() => onClicked(comment.id, comment.column)}
-          />
-          {comment.likes}
-        </p>
+          {comment.column !== "toDo" && (
+            <p className="likes">
+              <FaThumbsUp
+                className="like"
+                onClick={() => onClicked(comment.id, comment.column)}
+              />
+              {comment.likes}
+            </p>
+          )}
+        </div>
       )}
-    </div>
+    </Draggable>
   );
 };
 export default Comment;
