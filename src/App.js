@@ -43,6 +43,7 @@ function App() {
   const [toDo, setToDo] = useState([]);
 
   const [nextId, setNextId] = useState(4);
+  
 
   const changeState = () => {
     if (stage === 4) {
@@ -56,7 +57,8 @@ function App() {
     console.log("adding improvement now");
     setNextId(nextId + 1);
     const newImprovement = {
-      id: nextId,
+      index: nextId,
+      id: "droppable-" + nextId,
       text: inputText,
       likes: 0,
       column: "improvements",
@@ -68,7 +70,8 @@ function App() {
   const addQuestions = (inputText) => {
     setNextId(nextId + 1);
     const newQuestion = {
-      id: nextId,
+      index: nextId,
+      id: "droppable-" + nextId,
       text: inputText,
       likes: 0,
       column: "questions",
@@ -78,7 +81,8 @@ function App() {
   const addWorkedWell = (inputText) => {
     setNextId(nextId + 1);
     const newWorkedWell = {
-      id: nextId,
+      index: nextId,
+      id: "droppable-" + nextId,
       text: inputText,
       likes: 0,
       column: "workedWell",
@@ -94,15 +98,15 @@ function App() {
     console.log("DELETE clicked");
     switch (column) {
       case "improvements":
-        setImprovements(improvements.filter((comment) => comment.id != id));
+        setImprovements(improvements.filter((comment) => comment.id !== id));
         console.log(improvements);
         break;
       case "questions":
-        setQuestions(questions.filter((comment) => comment.id != id));
+        setQuestions(questions.filter((comment) => comment.id !== id));
         console.log(questions);
         break;
       case "workedWell":
-        setWorkedWell(workedWell.filter((comment) => comment.id != id));
+        setWorkedWell(workedWell.filter((comment) => comment.id !== id));
         console.log(workedWell);
         break;
       case "toDo":
@@ -151,11 +155,29 @@ function App() {
     }
   };
 
+  const dragEnded = (result) => {
+    console.log(result);
+    const { destination, source, draggableId} = result;
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const column = this.state.columns[source.draoppableId];
+    const newTaskIds = Array.from(column.Ids);
+
+  }
+
   return (
     <div>
       <Header stage={stage} changeState={changeState} />
       <div className="Columns">
-        <DragDropContext onDragEnd={() => {}}>
+        <DragDropContext onDragEnd={dragEnded}>
           <Column
             topic={"It worked well that..."}
             comments={workedWell}
@@ -164,7 +186,7 @@ function App() {
             addComment={addWorkedWell}
           />
         </DragDropContext>
-        <DragDropContext onDragEnd={() => {}}>
+        <DragDropContext onDragEnd={dragEnded}>
           <Column
             topic={"We could improve..."}
             comments={improvements}
@@ -173,7 +195,7 @@ function App() {
             addComment={addImprovement}
           />
         </DragDropContext>
-        <DragDropContext onDragEnd={() => {}}>
+        <DragDropContext onDragEnd={dragEnded}>
           <Column
             topic={"I want to ask about..."}
             comments={questions}
@@ -182,7 +204,7 @@ function App() {
             addComment={addQuestions}
           />
         </DragDropContext>
-        <DragDropContext onDragEnd={() => {}}>
+        <DragDropContext onDragEnd={dragEnded}>
           <Column
             topic={"We need to do..."}
             comments={toDo}
