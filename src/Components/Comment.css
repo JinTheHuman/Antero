@@ -1,6 +1,6 @@
 .Comment {
-  background: #f4f4f4;
   display: flex;
+  background: #f4f4f4;
   justify-content: space-between;
   padding-left: 1vw;
   padding-right: 1vw;
@@ -17,21 +17,15 @@
 
 .check-box {
   margin-right: auto;
-  max-height: 17px;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  width: 17vw;
-  text-align: left;
-}
-
-.leftObj {
-  min-width: 2vw;
+  width: 18vw;
 }
 
 .text {
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  width: 17vw;
+  width: 18vw;
 }
