@@ -2,6 +2,7 @@ import Header from "./Components/Header";
 import Column from "./Components/Column";
 import Comments from "./Components/Comments"
 import React, { useState } from 'react'
+import ExportRow from "./Components/ExportRow";
 
 function App() {
   const [stage, setStage] = useState(1);
@@ -94,12 +95,19 @@ function App() {
   return (
     <div>
       <Header stage={stage} changeState={changeState} />
-      {stage !== 5 && (
+      {stage !== 5 ? (
         <div className="Columns">
           <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell} stage={stage} />
           <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement} stage={stage} />
           <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions} stage={stage} />
           <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo} stage={stage} />
+        </div>
+      ) : (
+        <div className="ExportStage">
+          <ExportRow topic={"Works"} content={workedWell} />
+          <ExportRow topic={"Improve"} content={improvements} />
+          <ExportRow topic={"Others"} content={questions} />
+          <ExportRow topic={"Action Items"} content={toDo} />
         </div>
       )}
 
