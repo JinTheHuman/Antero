@@ -1,6 +1,6 @@
 import './Header.css';
 
-const Header = ({stage, changeState}) => {
+const Header = ({ stage, changeState }) => {
   var buttonText;
   
   switch(stage) {
@@ -13,31 +13,39 @@ const Header = ({stage, changeState}) => {
     case 3:
       buttonText = "Finish retro";
       break;
-    case 3:
-      buttonText = "Start new retro";
+    case 4:
+      buttonText = "Export";
+      break;
+    case 5:
+      buttonText = "Back";
       break;
     default:
       buttonText = "Start new retro";
   }
-  
+
   return (
     <>
       <div className="header">
-          <img src="" alt="Insert Logo Here" />
-          <div style={{display: "inline-block"}} className="left-side-header">
-            <span className='gonext' onClick={changeState}>
-              {buttonText}
+        <img src="" alt="Insert Logo Here" />
+        <div style={{ display: "inline-block" }} className="left-side-header">
+          {(stage === 4 || stage === 5) && (
+            <span className='gonext' onClick={() => changeState("new")}>
+              {"Start new retro"}
             </span>
-          </div>
+          )}
+          <span className='gonext' onClick={(stage === 5 ? () => changeState("back") : changeState)}>
+            {buttonText}
+          </span>
+        </div>
       </div>
       <div className='stage-bar'>
-        <a className={'brainstorm-stage', (stage==1 ? 'current': '')} >Brainstorm</a>
+        <a className={'brainstorm-stage', (stage == 1 ? 'current' : '')} >Brainstorm</a>
         <span className='arrow'>-></span>
-        <a className={'group-stage', (stage==2 ? 'current': '')}>Group & Vote</a>
+        <a className={'group-stage', (stage == 2 ? 'current' : '')}>Group & Vote</a>
         <span className='arrow'>-></span>
-        <a className={'add-stage', (stage==3 ? 'current': '')}>Add Action Items</a>
+        <a className={'add-stage', (stage == 3 ? 'current' : '')}>Add Action Items</a>
         <span className='arrow'>-></span>
-        <a className={'done-stage', (stage==4 ? 'current': '')}>Done</a>
+        <a className={'done-stage', (stage == 4 ? 'current' : '')}>Done</a>
       </div>
     </>
   )
