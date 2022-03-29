@@ -1,6 +1,7 @@
 import Header from "./Components/Header";
 import Column from "./Components/Column";
 import Comments from "./Components/Comments";
+import ExportRow from "./Components/ExportRow";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useState } from "react";
 
@@ -43,11 +44,12 @@ function App() {
   const [toDo, setToDo] = useState([]);
 
   const [nextId, setNextId] = useState(4);
-  
 
-  const changeState = () => {
-    if (stage === 4) {
+  const changeState = (inputStage) => {
+    if (inputStage === "new") {
       setStage(1);
+    } else if (inputStage === "back") {
+      setStage(4);
     } else {
       setStage(stage + 1);
     }
@@ -157,7 +159,7 @@ function App() {
 
   const dragEnded = (result) => {
     console.log(result);
-    const { destination, source, draggableId} = result;
+    const { destination, source, draggableId } = result;
     if (!destination) {
       return;
     }
@@ -173,48 +175,68 @@ function App() {
 
   }
 
-  return (
-    <div>
-      <Header stage={stage} changeState={changeState} />
-      <div className="Columns">
-        <DragDropContext onDragEnd={dragEnded}>
-          <Column
-            topic={"It worked well that..."}
-            comments={workedWell}
-            onClicked={likedComment}
-            onDelete={deleteComment}
-            addComment={addWorkedWell}
-          />
-        </DragDropContext>
-        <DragDropContext onDragEnd={dragEnded}>
-          <Column
-            topic={"We could improve..."}
-            comments={improvements}
-            onClicked={likedComment}
-            onDelete={deleteComment}
-            addComment={addImprovement}
-          />
-        </DragDropContext>
-        <DragDropContext onDragEnd={dragEnded}>
-          <Column
-            topic={"I want to ask about..."}
-            comments={questions}
-            onClicked={likedComment}
-            onDelete={deleteComment}
-            addComment={addQuestions}
-          />
-        </DragDropContext>
-        <DragDropContext onDragEnd={dragEnded}>
-          <Column
-            topic={"We need to do..."}
-            comments={toDo}
-            onDelete={deleteComment}
-            addComment={addToDo}
-          />
-        </DragDropContext>
-      </div>
-    </div>
-  );
+
+  if (stage !== 5) {
+    return (
+      <div>
+        <Header stage={stage} changeState={changeState} />
+
+        <div className="Columns">
+          <DragDropContext onDragEnd={dragEnded}>
+            <Column
+              topic={"It worked well that..."}
+              comments={workedWell}
+              onClicked={likedComment}
+              onDelete={deleteComment}
+              addComment={addWorkedWell}
+              stage={stage}
+            />
+          </DragDropContext>
+          <DragDropContext onDragEnd={dragEnded}>
+            <Column
+              topic={"We could improve..."}
+              comments={improvements}
+              onClicked={likedComment}
+              onDelete={deleteComment}
+              addComment={addImprovement}
+              stage={stage}
+            />
+          </DragDropContext>
+          <DragDropContext onDragEnd={dragEnded}>
+            <Column
+              topic={"I want to ask about..."}
+              comments={questions}
+              onClicked={likedComment}
+              onDelete={deleteComment}
+              addComment={addQuestions}
+              stage={stage}
+            />
+          </DragDropContext>
+          <DragDropContext onDragEnd={dragEnded}>
+            <Column
+              topic={"We need to do..."}
+              comments={toDo}
+              onDelete={deleteComment}
+              addComment={addToDo}
+              stage={stage}
+            />
+          </DragDropContext>
+        </div>
+      </div >
+    )
+  } else {
+    return (
+      <div>
+        <Header stage={stage} changeState={changeState} />
+
+        <div className="ExportStage">
+          <ExportRow topic={"Works"} content={workedWell} />
+          <ExportRow topic={"Improve"} content={improvements} />
+          <ExportRow topic={"Others"} content={questions} />
+          <ExportRow topic={"Action Items"} content={toDo} />
+        </div>
+      </div >)
+  }
 }
 
 export default App;
