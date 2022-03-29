@@ -55,3 +55,4 @@ const Comment = ({ comment, onClicked, onDelete }) => {
   );
 };
 export default Comment;
+  
