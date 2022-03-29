@@ -2,7 +2,8 @@ import './Header.css';
 
 const Header = ({ stage, changeState }) => {
   var buttonText;
-  switch (stage) {
+  
+  switch(stage) {
     case 1:
       buttonText = "Group & vote comments";
       break;

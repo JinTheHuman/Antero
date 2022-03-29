@@ -22,6 +22,8 @@ const AddComments = ({ topic, addComment, stage }) => {
         setText("");
 
     }
+    console.log((topic === "We need to do..." && (stage === 1 || stage === 2)));
+    console.log(stage);
     return (
         <form className='add-comment' onSubmit={(e) => handleSubmit(e)}>
             <div className='comment-control'>
