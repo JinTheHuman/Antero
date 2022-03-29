@@ -4,7 +4,7 @@ import "./ExportRow.css"
 const ExportRow = ({ topic, content }) => {
   return (
     <div className="ExportRow">
-      <h1 className="ExportTitle">{topic}</h1>
+      <h1 className="ExportTitle" >{topic}</h1>
       <ul>
         {content.map((content) => (<ExportBody content={content} />))}
       </ul>
