@@ -28,7 +28,7 @@ const Header = ({ stage, changeState }) => {
         <img src="" alt="Insert Logo Here" />
         <div style={{ display: "inline-block" }} className="left-side-header">
           {(stage === 4 || stage === 5) && (
-            <span className='gonext' onClick={() => changeState("next")}>
+            <span className='gonext' onClick={() => changeState("new")}>
               {"Start new retro"}
             </span>
           )}

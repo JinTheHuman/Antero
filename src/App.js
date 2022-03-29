@@ -15,7 +15,7 @@ function App() {
   const [nextId, setNextId] = useState(4);
 
   const changeState = (inputStage) => {
-    if (inputStage === "next") {
+    if (inputStage === "new") {
       setStage(1);
     } else if (inputStage === "back") {
       setStage(4);
