@@ -5,7 +5,6 @@ import ExportRow from "./Components/ExportRow";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useState } from "react";
 import Confirm from "./Components/Confirm";
-import "./App.css";
 
 function App() {
   const [stage, setStage] = useState(1);
