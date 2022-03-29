@@ -4,6 +4,7 @@ import Comments from "./Components/Comments";
 import ExportRow from "./Components/ExportRow";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useState } from "react";
+import Confirm from "./Components/Confirm";
 
 function App() {
   const [stage, setStage] = useState(1);
@@ -45,7 +46,10 @@ function App() {
 
   const [nextId, setNextId] = useState(4);
 
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const changeState = (inputStage) => {
+    console.log("this is called ", inputStage);
     if (inputStage === "new") {
       setStage(1);
     } else if (inputStage === "back") {
@@ -53,7 +57,21 @@ function App() {
     } else {
       setStage(stage + 1);
     }
-  };
+    setShowConfirm(false);
+  }
+
+  const updateConfirm = (inputStage) => {
+    if (showConfirm == false) {
+      if (stage === 1 || stage === 2) {
+        setShowConfirm(true);
+      } else {
+        changeState(inputStage);
+      }
+    } else {
+      setShowConfirm(false);
+    }
+
+  }
 
   const addImprovement = (inputText) => {
     console.log("adding improvement now");
@@ -175,11 +193,10 @@ function App() {
 
   }
 
-
   if (stage !== 5) {
     return (
       <div>
-        <Header stage={stage} changeState={changeState} />
+        <Header stage={stage} changeState={updateConfirm} />
 
         <div className="Columns">
           <DragDropContext onDragEnd={dragEnded}>
@@ -222,12 +239,13 @@ function App() {
             />
           </DragDropContext>
         </div>
+        <Confirm show={showConfirm} stage={stage} changeStage={changeState} cancel={updateConfirm}></Confirm>
       </div >
     )
   } else {
     return (
       <div>
-        <Header stage={stage} changeState={changeState} />
+        <Header stage={stage} changeState={updateConfirm} />
 
         <div className="ExportStage">
           <ExportRow topic={"Works"} content={workedWell} />
