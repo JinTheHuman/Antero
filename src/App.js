@@ -200,35 +200,42 @@ function App() {
 
         <div className="Columns">
           <DragDropContext onDragEnd={dragEnded}>
-            <Column
+            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+              <Column
               topic={"It worked well that..."}
               comments={workedWell}
               onClicked={likedComment}
               onDelete={deleteComment}
               addComment={addWorkedWell}
               stage={stage}
-            />
+              />
+            </div>
+
           </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
-            <Column
-              topic={"We could improve..."}
-              comments={improvements}
-              onClicked={likedComment}
-              onDelete={deleteComment}
-              addComment={addImprovement}
-              stage={stage}
-            />
+            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+              <Column
+                topic={"We could improve..."}
+                comments={improvements}
+                onClicked={likedComment}
+                onDelete={deleteComment}
+                addComment={addImprovement}
+                stage={stage}
+              />
+            </div>
           </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
-            <Column
-              topic={"I want to ask about..."}
-              comments={questions}
-              onClicked={likedComment}
-              onDelete={deleteComment}
-              addComment={addQuestions}
-              stage={stage}
-            />
-          </DragDropContext>
+            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+              <Column
+                topic={"I want to ask about..."}
+                comments={questions}
+                onClicked={likedComment}
+                onDelete={deleteComment}
+                addComment={addQuestions}
+                stage={stage}
+              />
+            </div>
+          </DragDropContext> 
           <DragDropContext onDragEnd={dragEnded}>
             <Column
               topic={"We need to do..."}
