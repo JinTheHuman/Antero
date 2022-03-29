@@ -12,8 +12,11 @@ const Header = ({ stage, changeState }) => {
     case 3:
       buttonText = "Finish retro";
       break;
-    case 3:
-      buttonText = "Start new retro";
+    case 4:
+      buttonText = "Export";
+      break;
+    case 5:
+      buttonText = "Back";
       break;
     default:
       buttonText = "Start new retro";
@@ -24,14 +27,14 @@ const Header = ({ stage, changeState }) => {
       <div className="header">
         <img src="" alt="Insert Logo Here" />
         <div style={{ display: "inline-block" }} className="left-side-header">
-          <span className='gonext' onClick={changeState}>
-            {buttonText}
-          </span>
-          {stage === 4 && (
-            <span className='gonext' onClick={changeState}>
-              {"Export"}
+          {(stage === 4 || stage === 5) && (
+            <span className='gonext' onClick={() => changeState("next")}>
+              {"Start new retro"}
             </span>
           )}
+          <span className='gonext' onClick={(stage === 5 ? () => changeState("back") : changeState)}>
+            {buttonText}
+          </span>
         </div>
       </div>
       <div className='stage-bar'>

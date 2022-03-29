@@ -13,9 +13,11 @@ function App() {
 
   const [nextId, setNextId] = useState(4);
 
-  const changeState = () => {
-    if (stage === 4) {
+  const changeState = (inputStage) => {
+    if (inputStage === "next") {
       setStage(1);
+    } else if (inputStage === "back") {
+      setStage(4);
     } else {
       setStage(stage + 1);
     }
@@ -92,12 +94,14 @@ function App() {
   return (
     <div>
       <Header stage={stage} changeState={changeState} />
-      <div className="Columns">
-        <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell} stage={stage} />
-        <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement} stage={stage} />
-        <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions} stage={stage} />
-        <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo} stage={stage} />
-      </div>
+      {stage !== 5 && (
+        <div className="Columns">
+          <Column topic={"It worked well that..."} comments={workedWell} onClicked={likedComment} onDelete={deleteComment} addComment={addWorkedWell} stage={stage} />
+          <Column topic={"We could improve..."} comments={improvements} onClicked={likedComment} onDelete={deleteComment} addComment={addImprovement} stage={stage} />
+          <Column topic={"I want to ask about..."} comments={questions} onClicked={likedComment} onDelete={deleteComment} addComment={addQuestions} stage={stage} />
+          <Column topic={"We need to do..."} comments={toDo} onDelete={deleteComment} addComment={addToDo} stage={stage} />
+        </div>
+      )}
 
     </div>
   );
