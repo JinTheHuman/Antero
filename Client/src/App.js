@@ -3,10 +3,38 @@ import Column from "./Components/Column";
 import Comments from "./Components/Comments";
 import ExportRow from "./Components/ExportRow";
 import { DragDropContext } from "react-beautiful-dnd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Confirm from "./Components/Confirm";
+import { io } from 'socket.io-client';
 
 function App() {
+  // SOCKET STUFF
+
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    console.log("creating socket");
+    const newSocket = io(`http://${window.location.hostname}:5000`);
+    setSocket(newSocket);
+    return () => newSocket.close();
+  }, [setSocket])
+
+  if (socket) {
+    socket.on("connection", (id) => {
+      console.log("You are conencted with ", id);
+      // updateMessage(receivedMessages.message);
+    });
+
+    socket.on("receive-columns", (columns) => {
+      console.log("Poop");
+      setImprovements(columns[0]);
+      setQuestions(columns[1]);
+      setToDo(columns[3]);
+      setWorkedWell(columns[2]);
+    })
+  }
+  // SOCKET STUFF
+
   const [stage, setStage] = useState(1);
   const [improvements, setImprovements] = useState([
     {
@@ -84,6 +112,7 @@ function App() {
       column: "improvements",
     };
     setImprovements([...improvements, newImprovement]);
+    socket.emit("addComment", newImprovement);
     console.log({ improvements });
   };
 
@@ -96,7 +125,9 @@ function App() {
       likes: 0,
       column: "questions",
     };
+    
     setQuestions([...questions, newQuestion]);
+    socket.emit("addComment", newQuestion);
   };
   const addWorkedWell = (inputText) => {
     setNextId(nextId + 1);
@@ -108,10 +139,12 @@ function App() {
       column: "workedWell",
     };
     setWorkedWell([...workedWell, newWorkedWell]);
+    socket.emit("addComment", newWorkedWell);
   };
   const addToDo = (inputText) => {
     const newToDo = { text: inputText, checked: false, column: "toDo" };
     setToDo([...toDo, newToDo]);
+    socket.emit("addComment", newToDo);
   };
 
   const deleteComment = (id, column) => {
