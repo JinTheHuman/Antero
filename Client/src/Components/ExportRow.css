@@ -1,0 +1,14 @@
+.ExportStage {
+  padding-top: 2vh;
+}
+
+.ExportRow {
+  /* background: #f4f4f4; */
+  display: flex;
+  flex-direction: column;
+  padding: 0vh 2vw;
+}
+
+.ExportTitle {
+  font-size: 200%;
+}
