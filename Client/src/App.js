@@ -18,60 +18,43 @@ function App() {
     return () => newSocket.close();
   }, [setSocket]);
 
-  if (socket) {
-    socket.on("connection", (id) => {
-      console.log("You are conencted with ", id);
-      // updateMessage(receivedMessages.message);
-    });
 
-    socket.on("receive-columns", (columns) => {
-      console.log("Poop");
-      setImprovements(columns[0]);
-      setQuestions(columns[1]);
-      setToDo(columns[3]);
-      setWorkedWell(columns[2]);
-    });
-  }
   // SOCKET STUFF
 
   const [stage, setStage] = useState(1);
   const [improvements, setImprovements] = useState([
-    {
-      index: 1,
-      text: "test1",
-      likes: 0,
-      column: "improvements",
-      id: "improvements-0",
-      drag_id: 0,
-    },
+    // {
+    //   index: 0,
+    //   text: "test1",
+    //   likes: 0,
+    //   column: "improvements",
+    //   id: "droppable-0",
+    // },
   ]);
   const [questions, setQuestions] = useState([
-    {
-      index: 2,
-      text: "test1",
-      likes: 0,
-      column: "questions",
-      id: "questions-1",
-      drag_id: 0,
-    },
+    // {
+    //   index: 1,
+    //   text: "test1",
+    //   likes: 0,
+    //   column: "questions",
+    //   id: "droppable-1",
+    // },
   ]);
   const [workedWell, setWorkedWell] = useState([
-    {
-      index: 1,
-      text: "test1",
-      likes: 0,
-      column: "workedWell",
-      id: "workedWell-2",
-      drag_id: 0,
-    },
-    {
-      index: 2,
-      text: "test2",
-      likes: 0,
-      column: "workedWell",
-      id: "workedWell-3",
-      drag_id: 1,
-    },
+    // {
+    //   index: 2,
+    //   text: "test1",
+    //   likes: 0,
+    //   column: "workedWell",
+    //   id: "droppable-2",
+    // },
+    // {
+    //   index: 3,
+    //   text: "test2",
+    //   likes: 0,
+    //   column: "workedWell",
+    //   id: "droppable-3",
+    // },
   ]);
   const [toDo, setToDo] = useState([]);
 
@@ -79,13 +62,61 @@ function App() {
 
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const [clientId, setClientId] = useState(null);
+
+  if (socket) {
+    socket.on("connection", (id) => {
+      console.log("You are conencted with ", id);
+      setClientId(id);
+      // updateMessage(receivedMessages.message);
+    });
+
+    socket.on("receive-nextId", (nextIdSERVER) => {
+      setNextId(nextIdSERVER);
+    })
+
+    // socket.on("receive-likes", (columns) => {
+    //   console.log("recieving likes");
+    //   setImprovements(columns[0]);
+    //   setQuestions(columns[1]);
+    //   setToDo(columns[3]);
+    //   setWorkedWell(columns[2]);
+    // });
+
+    socket.on("receive-columns", (columns) => {
+      console.log("Receiving columsn");
+      setImprovements(columns[0]);
+      setQuestions(columns[1]);
+      setToDo(columns[3]);
+      setWorkedWell(columns[2]);
+    })
+
+    socket.on("receive-current-state", (SERVER) => {
+      console.log("receive", SERVER);
+      setStage(SERVER[0]);
+      setImprovements(SERVER[1]);
+      setQuestions(SERVER[2]);
+      setWorkedWell(SERVER[3]);
+      setToDo(SERVER[4]);
+      setNextId(SERVER[5]);
+    })
+
+    socket.on("receive-stage", (stageSERVER)=>{
+      console.log("receiving stage", stageSERVER);
+      setStage(stageSERVER);
+    })
+  }
+
   const changeState = (inputStage) => {
     console.log("this is called ", inputStage);
     if (inputStage === "new") {
+      socket.emit("change-stage", 1);
       setStage(1);
     } else if (inputStage === "back") {
+      socket.emit("change-stage", 4);
       setStage(4);
     } else {
+      socket.emit("change-stage", stage + 1);
       setStage(stage + 1);
     }
     setShowConfirm(false);
@@ -174,39 +205,42 @@ function App() {
       default:
         console.log("broken delete");
     }
+    socket.emit("deleteComment", id, column);
   };
 
   const likedComment = (id, column) => {
+    socket.emit("like-comment", ([id, column, clientId]));
     switch (column) {
       case "improvements":
         setImprovements(
           improvements.map((comment) =>
-            comment.id === id
-              ? { ...comment, likes: comment.likes + 1 }
+            (comment.id === id && !comment.likedClients.includes(clientId))
+              ? { ...comment, likes: comment.likes + 1, likedClients: [...comment.likedClients, clientId] }
               : comment
           )
         );
         console.log(improvements);
+        console.log("here");
         break;
       case "questions":
         setQuestions(
           questions.map((comment) =>
-            comment.id === id
-              ? { ...comment, likes: comment.likes + 1 }
+            (comment.id === id && !comment.likedClients.includes(clientId))
+              ? { ...comment, likes: comment.likes + 1, likedClients: [...comment.likedClients, clientId] }
               : comment
           )
         );
-        console.log(improvements);
+        console.log(questions);
         break;
       case "workedWell":
         setWorkedWell(
           workedWell.map((comment) =>
-            comment.id === id
-              ? { ...comment, likes: comment.likes + 1 }
+            (comment.id === id && !comment.likedClients.includes(clientId))
+              ? { ...comment, likes: comment.likes + 1, likedClients: [...comment.likedClients, clientId] }
               : comment
           )
         );
-        console.log(improvements);
+        console.log(workedWell);
         break;
       default:
         console.log("broken");
