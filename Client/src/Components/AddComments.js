@@ -20,15 +20,16 @@ const AddComments = ({ topic, addComment, stage }) => {
         event.preventDefault();
         addComment(text);
         setText("");
-        
+
     }
-    return (  
+
+    return (
         <form className='add-comment' onSubmit={(e) => handleSubmit(e)}>
             <div className='comment-control'>
-                <input 
+                <input
                     type='text' placeholder={topic}
                     value={text} onChange={(e) => setText(e.target.value)}
-                    //{stage} === 4 ? disabled
+                    disabled={(topic === "We need to do..." && (stage === 1 || stage === 2)) || (topic !== "We need to do..." && stage === 4) ? true : false}
                 />
             </div>
         </form>

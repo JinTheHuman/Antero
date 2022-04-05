@@ -5,6 +5,7 @@
   margin: 0%;
   padding: 1vh 1vw;
   box-sizing: border-box;
+  justify-content: space-between;
 }
 
 .left-side-header {
@@ -22,6 +23,7 @@
   align-items: center;
 
   padding: 1vh 1vw;
+  margin: 0vh 0.5vw;
   height: 36px;
 
   user-select: none;
