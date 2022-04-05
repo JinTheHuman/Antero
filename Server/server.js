@@ -5,8 +5,6 @@ const io = require("socket.io")(5000, {
 	}
 });
 
-let hasLiked = [];
-
 let stage = 1;
 
 let improvements = [];
