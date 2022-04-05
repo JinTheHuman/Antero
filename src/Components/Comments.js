@@ -5,7 +5,8 @@ const Comments = ({ comments, onClicked, onDelete }) => {
   return (
     <Droppable droppableId="comments">
       {(provided) => (
-        <div {...provided.droppableProps} ref={provided.innerRef}>
+        <div {...provided.droppableProps} ref={provided.innerRef} ls
+        >
           {comments.map((comments, index) => (
             <Comment
               className="Comment"

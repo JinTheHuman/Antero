@@ -43,7 +43,6 @@ function App() {
   const [toDo, setToDo] = useState([]);
 
   const [nextId, setNextId] = useState(4);
-  
 
   const changeState = () => {
     if (stage === 4) {
@@ -155,9 +154,10 @@ function App() {
     }
   };
 
-  const dragEnded = (result) => {
+  const dragEnded = (result, column) => {
+    console.log(column);
     console.log(result);
-    const { destination, source, draggableId} = result;
+    const { destination, source, draggableId } = result;
     if (!destination) {
       return;
     }
@@ -167,11 +167,7 @@ function App() {
     ) {
       return;
     }
-
-    const column = this.state.columns[source.draoppableId];
-    const newTaskIds = Array.from(column.Ids);
-
-  }
+  };
 
   return (
     <div>
