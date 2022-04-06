@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { FaTimes, FaThumbsUp } from "react-icons/fa";
 import "./Comment.css";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Comments from "./Comments";
+import { Draggable } from "react-beautiful-dnd";
 
 const Comment = ({ comment, onClicked, onDelete }) => {
   const [isShown, setIsShown] = useState(false);
 
   return (
-    <Draggable draggableId={comment.id} index={comment.index}>
+    <Draggable draggableId={comment.id} index={comment.drag_id}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -55,4 +54,3 @@ const Comment = ({ comment, onClicked, onDelete }) => {
   );
 };
 export default Comment;
-  
