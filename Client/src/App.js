@@ -101,7 +101,7 @@ function App() {
       setNextId(SERVER[5]);
     })
 
-    socket.on("receive-stage", (stageSERVER)=>{
+    socket.on("receive-stage", (stageSERVER) => {
       console.log("receiving stage", stageSERVER);
       setStage(stageSERVER);
     })
@@ -142,6 +142,7 @@ function App() {
       id: "improvements-" + nextId,
       text: inputText,
       likes: 0,
+      likedClients: [],
       column: "improvements",
       drag_id: improvements.length,
     };
@@ -157,6 +158,7 @@ function App() {
       id: "questions-" + nextId,
       text: inputText,
       likes: 0,
+      likedClients: [],
       column: "questions",
       drag_id: questions.length,
     };
@@ -171,6 +173,7 @@ function App() {
       id: "workedWell-" + nextId,
       text: inputText,
       likes: 0,
+      likedClients: [],
       column: "workedWell",
       drag_id: workedWell.length,
     };
