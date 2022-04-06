@@ -1,11 +1,10 @@
 import Header from "./Components/Header";
 import Column from "./Components/Column";
-import Comments from "./Components/Comments";
 import ExportRow from "./Components/ExportRow";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useState, useEffect } from "react";
 import Confirm from "./Components/Confirm";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 
 function App() {
   // SOCKET STUFF
@@ -17,7 +16,7 @@ function App() {
     const newSocket = io(`http://${window.location.hostname}:5000`);
     setSocket(newSocket);
     return () => newSocket.close();
-  }, [setSocket])
+  }, [setSocket]);
 
 
   // SOCKET STUFF
@@ -121,10 +120,10 @@ function App() {
       setStage(stage + 1);
     }
     setShowConfirm(false);
-  }
+  };
 
   const updateConfirm = (inputStage) => {
-    if (showConfirm == false) {
+    if (showConfirm === false) {
       if (stage === 1 || stage === 2) {
         setShowConfirm(true);
       } else {
@@ -133,19 +132,18 @@ function App() {
     } else {
       setShowConfirm(false);
     }
-
-  }
+  };
 
   const addImprovement = (inputText) => {
     console.log("adding improvement now");
     setNextId(nextId + 1);
     const newImprovement = {
       index: nextId,
-      id: "droppable-" + nextId,
-      likedClients: [],
+      id: "improvements-" + nextId,
       text: inputText,
       likes: 0,
       column: "improvements",
+      drag_id: improvements.length,
     };
     setImprovements([...improvements, newImprovement]);
     socket.emit("addComment", newImprovement);
@@ -156,13 +154,13 @@ function App() {
     setNextId(nextId + 1);
     const newQuestion = {
       index: nextId,
-      id: "droppable-" + nextId,
-      likedClients: [],
+      id: "questions-" + nextId,
       text: inputText,
       likes: 0,
       column: "questions",
+      drag_id: questions.length,
     };
-    
+
     setQuestions([...questions, newQuestion]);
     socket.emit("addComment", newQuestion);
   };
@@ -170,11 +168,11 @@ function App() {
     setNextId(nextId + 1);
     const newWorkedWell = {
       index: nextId,
-      id: "droppable-" + nextId,
-      likedClients: [],
+      id: "workedWell-" + nextId,
       text: inputText,
       likes: 0,
       column: "workedWell",
+      drag_id: workedWell.length,
     };
     setWorkedWell([...workedWell, newWorkedWell]);
     socket.emit("addComment", newWorkedWell);
@@ -251,7 +249,7 @@ function App() {
 
   const dragEnded = (result) => {
     console.log(result);
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
     if (!destination) {
       return;
     }
@@ -261,11 +259,26 @@ function App() {
     ) {
       return;
     }
-
-    const column = this.state.columns[source.droppableId];
-    const newTaskIds = Array.from(column.Ids);
-
-  }
+    if (result.draggableId.includes("workedWell")) {
+      const newItems = [...workedWell];
+      const [removed] = newItems.splice(result.source.index, 1);
+      console.log(removed);
+      newItems.splice(result.destination.index, 0, removed);
+      setWorkedWell(newItems);
+    } else if (result.draggableId.includes("questions")) {
+      const newItems = [...questions];
+      const [removed] = newItems.splice(result.source.index, 1);
+      console.log(removed);
+      newItems.splice(result.destination.index, 0, removed);
+      setQuestions(newItems);
+    } else if (result.draggableId.includes("improvements")) {
+      const newItems = [...improvements];
+      const [removed] = newItems.splice(result.source.index, 1);
+      console.log(removed);
+      newItems.splice(result.destination.index, 0, removed);
+      setImprovements(newItems);
+    }
+  };
 
   if (stage !== 5) {
     return (
@@ -274,20 +287,27 @@ function App() {
 
         <div className="Columns">
           <DragDropContext onDragEnd={dragEnded}>
-            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+            <div
+              style={
+                stage === 4 ? { pointerEvents: "none", opacity: "0.4" } : {}
+              }
+            >
               <Column
-              topic={"It worked well that..."}
-              comments={workedWell}
-              onClicked={likedComment}
-              onDelete={deleteComment}
-              addComment={addWorkedWell}
-              stage={stage}
+                topic={"It worked well that..."}
+                comments={workedWell}
+                onClicked={likedComment}
+                onDelete={deleteComment}
+                addComment={addWorkedWell}
+                stage={stage}
               />
             </div>
-
           </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
-            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+            <div
+              style={
+                stage === 4 ? { pointerEvents: "none", opacity: "0.4" } : {}
+              }
+            >
               <Column
                 topic={"We could improve..."}
                 comments={improvements}
@@ -299,7 +319,11 @@ function App() {
             </div>
           </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
-            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+            <div
+              style={
+                stage === 4 ? { pointerEvents: "none", opacity: "0.4" } : {}
+              }
+            >
               <Column
                 topic={"I want to ask about..."}
                 comments={questions}
@@ -309,7 +333,7 @@ function App() {
                 stage={stage}
               />
             </div>
-          </DragDropContext> 
+          </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
             <Column
               topic={"We need to do..."}
@@ -320,9 +344,14 @@ function App() {
             />
           </DragDropContext>
         </div>
-        <Confirm show={showConfirm} stage={stage} changeStage={changeState} cancel={updateConfirm}></Confirm>
-      </div >
-    )
+        <Confirm
+          show={showConfirm}
+          stage={stage}
+          changeStage={changeState}
+          cancel={updateConfirm}
+        ></Confirm>
+      </div>
+    );
   } else {
     return (
       <div>
@@ -334,7 +363,8 @@ function App() {
           <ExportRow topic={"Others"} content={questions} />
           <ExportRow topic={"Action Items"} content={toDo} />
         </div>
-      </div >)
+      </div>
+    );
   }
 }
 

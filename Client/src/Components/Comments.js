@@ -1,5 +1,5 @@
 import Comment from "./Comment";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 
 const Comments = ({ comments, onClicked, onDelete }) => {
   return (
