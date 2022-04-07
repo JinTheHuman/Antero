@@ -33,7 +33,8 @@ io.on("connection", socket => {
     questions = [];
     workedWell = [];
     toDo = [];
-    socket.broadcast.emit("receive-new-retro");
+    nextId = 0;
+    socket.broadcast.emit("receive-current-state", ([stage, improvements, questions, workedWell, toDo, nextId]));
   })
 
   socket.on("addComment", (comment) => {
