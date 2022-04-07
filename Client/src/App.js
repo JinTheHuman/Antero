@@ -58,7 +58,7 @@ function App() {
   ]);
   const [toDo, setToDo] = useState([]);
 
-  const [nextId, setNextId] = useState(4);
+  const [nextId, setNextId] = useState(0);
 
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -105,12 +105,26 @@ function App() {
       console.log("receiving stage", stageSERVER);
       setStage(stageSERVER);
     })
+
+    // socket.on("receive-new-retro", () => {
+    //   console.log("receiving new retro");
+    //   setImprovements([]);
+    //   setQuestions([]);
+    //   setWorkedWell([]);
+    //   setToDo([]);
+    // })
   }
 
   const changeState = (inputStage) => {
     console.log("this is called ", inputStage);
     if (inputStage === "new") {
       socket.emit("change-stage", 1);
+      socket.emit("newRetro");
+      setImprovements([]);
+      setQuestions([]);
+      setWorkedWell([]);
+      setToDo([]);
+      setNextId(0);
       setStage(1);
     } else if (inputStage === "back") {
       socket.emit("change-stage", 4);

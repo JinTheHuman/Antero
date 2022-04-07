@@ -1,4 +1,5 @@
 import './Header.css';
+import { ReactComponent as Logo } from '../assets/notes.svg';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const Header = ({ stage, changeState }) => {
@@ -27,7 +28,7 @@ const Header = ({ stage, changeState }) => {
   return (
     <>
       <div className="header">
-        <img src="" alt="Insert Logo Here" />
+        <Logo width={32} height={32} fill={"#636363"} />
         <div style={{ display: "inline-block" }} className="left-side-header">
           {(stage === 4 || stage === 5) && (
             <span className='gonext' onClick={() => changeState("new")}>
