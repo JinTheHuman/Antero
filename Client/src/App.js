@@ -59,6 +59,7 @@ function App() {
   const [toDo, setToDo] = useState([]);
 
   const [nextId, setNextId] = useState(0);
+  const [nextCheckBoxId, setNextCheckBoxId] = useState(0);
 
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -195,15 +196,10 @@ function App() {
     socket.emit("addComment", newWorkedWell);
   };
   const addToDo = (inputText) => {
-    setNextId(nextId + 1);
-    const newToDo = { 
-      text: inputText, 
-      checked: false, 
-      column: "toDo", 
-      drag_id: toDo.length,
-      id: "toDo-" + nextId,
-    };
+    setNextCheckBoxId(nextCheckBoxId + 1)
+    const newToDo = { text: inputText, checked: false, column: "toDo", id: nextCheckBoxId };
     setToDo([...toDo, newToDo]);
+
     socket.emit("addComment", newToDo);
   };
 
