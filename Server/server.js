@@ -50,7 +50,7 @@ io.on("connection", socket => {
         improvements.push(comment);
         console.log(improvements);
         break;
-      case "todo":
+      case "toDo":
         toDo.push(comment);
         break;
       default:
@@ -74,7 +74,7 @@ io.on("connection", socket => {
       case "improvements":
         improvements = improvements.filter((comment) => comment.id !== id);
         break;
-      case "todo":
+      case "toDo":
         toDo = toDo.filter((comment) => comment.id !== id);
         break;
       default:
