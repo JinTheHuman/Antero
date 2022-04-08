@@ -195,7 +195,14 @@ function App() {
     socket.emit("addComment", newWorkedWell);
   };
   const addToDo = (inputText) => {
-    const newToDo = { text: inputText, checked: false, column: "toDo" };
+    setNextId(nextId + 1);
+    const newToDo = { 
+      text: inputText, 
+      checked: false, 
+      column: "toDo", 
+      drag_id: toDo.length,
+      id: "toDo-" + nextId,
+    };
     setToDo([...toDo, newToDo]);
     socket.emit("addComment", newToDo);
   };
@@ -216,7 +223,7 @@ function App() {
         console.log(workedWell);
         break;
       case "toDo":
-        setToDo(toDo.filter((comment) => comment.id != id));
+        setToDo(toDo.filter((comment) => comment.id !== id));
         console.log(toDo);
         break;
       default:
