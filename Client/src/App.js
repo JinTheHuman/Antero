@@ -128,10 +128,12 @@ function App() {
       setNextId(0);
       setStage(1);
     } else if (inputStage === "back") {
-      socket.emit("change-stage", 4);
+      // socket.emit("change-stage", 4);
       setStage(4);
     } else {
-      socket.emit("change-stage", stage + 1);
+      if (stage != 4) {
+        socket.emit("change-stage", stage + 1);
+      }
       setStage(stage + 1);
     }
     setShowConfirm(false);

@@ -42,11 +42,11 @@ const Header = ({ stage, changeState }) => {
       </div>
       <div className='stage-bar'>
         <a className={'brainstorm-stage', (stage == 1 ? 'current' : '')} >Brainstorm</a>
-        <span className='arrow'><AiOutlineArrowRight /></span>
+        <span className='arrow'><AiOutlineArrowRight className='arrow-icon'/></span>
         <a className={'group-stage', (stage == 2 ? 'current' : '')}>Group & Vote</a>
-        <span className='arrow'><AiOutlineArrowRight /></span>
+        <span className='arrow'><AiOutlineArrowRight className='arrow-icon'/></span>
         <a className={'add-stage', (stage == 3 ? 'current' : '')}>Add Action Items</a>
-        <span className='arrow'><AiOutlineArrowRight /></span>
+        <span className='arrow'><AiOutlineArrowRight className='arrow-icon'/></span>
         <a className={'done-stage', (stage == 4 ? 'current' : '')}>Done</a>
       </div>
     </>

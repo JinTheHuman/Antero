@@ -32,8 +32,8 @@ const Comment = ({ comment, onClicked, onDelete }) => {
 
           {comment.column === "toDo" ? (
             <>
-              <input type="checkbox" />
-              <h3 className="check-box">{comment.text}</h3>
+              <input type="checkbox" className="checkbox"/>
+              <h3 className="check-box-txt">{comment.text}</h3>
             </>
           ) : (
             <h3 className="text">{comment.text}</h3>
