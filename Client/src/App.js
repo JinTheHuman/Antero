@@ -18,7 +18,6 @@ function App() {
     return () => newSocket.close();
   }, [setSocket]);
 
-
   // SOCKET STUFF
 
   const [stage, setStage] = useState(1);
@@ -74,7 +73,7 @@ function App() {
 
     socket.on("receive-nextId", (nextIdSERVER) => {
       setNextId(nextIdSERVER);
-    })
+    });
 
     // socket.on("receive-likes", (columns) => {
     //   console.log("recieving likes");
@@ -90,7 +89,7 @@ function App() {
       setQuestions(columns[1]);
       setToDo(columns[3]);
       setWorkedWell(columns[2]);
-    })
+    });
 
     socket.on("receive-current-state", (SERVER) => {
       console.log("receive", SERVER);
@@ -100,12 +99,12 @@ function App() {
       setWorkedWell(SERVER[3]);
       setToDo(SERVER[4]);
       setNextId(SERVER[5]);
-    })
+    });
 
     socket.on("receive-stage", (stageSERVER) => {
       console.log("receiving stage", stageSERVER);
       setStage(stageSERVER);
-    })
+    });
 
     // socket.on("receive-new-retro", () => {
     //   console.log("receiving new retro");
@@ -198,8 +197,13 @@ function App() {
     socket.emit("addComment", newWorkedWell);
   };
   const addToDo = (inputText) => {
-    setNextCheckBoxId(nextCheckBoxId + 1)
-    const newToDo = { text: inputText, checked: false, column: "toDo", id: nextCheckBoxId };
+    setNextCheckBoxId(nextCheckBoxId + 1);
+    const newToDo = {
+      text: inputText,
+      checked: false,
+      column: "toDo",
+      id: nextCheckBoxId,
+    };
     setToDo([...toDo, newToDo]);
 
     socket.emit("addComment", newToDo);
@@ -231,13 +235,17 @@ function App() {
   };
 
   const likedComment = (id, column) => {
-    socket.emit("like-comment", ([id, column, clientId]));
+    socket.emit("like-comment", [id, column, clientId]);
     switch (column) {
       case "improvements":
         setImprovements(
           improvements.map((comment) =>
-            (comment.id === id && !comment.likedClients.includes(clientId))
-              ? { ...comment, likes: comment.likes + 1, likedClients: [...comment.likedClients, clientId] }
+            comment.id === id && !comment.likedClients.includes(clientId)
+              ? {
+                  ...comment,
+                  likes: comment.likes + 1,
+                  likedClients: [...comment.likedClients, clientId],
+                }
               : comment
           )
         );
@@ -247,8 +255,12 @@ function App() {
       case "questions":
         setQuestions(
           questions.map((comment) =>
-            (comment.id === id && !comment.likedClients.includes(clientId))
-              ? { ...comment, likes: comment.likes + 1, likedClients: [...comment.likedClients, clientId] }
+            comment.id === id && !comment.likedClients.includes(clientId)
+              ? {
+                  ...comment,
+                  likes: comment.likes + 1,
+                  likedClients: [...comment.likedClients, clientId],
+                }
               : comment
           )
         );
@@ -257,8 +269,12 @@ function App() {
       case "workedWell":
         setWorkedWell(
           workedWell.map((comment) =>
-            (comment.id === id && !comment.likedClients.includes(clientId))
-              ? { ...comment, likes: comment.likes + 1, likedClients: [...comment.likedClients, clientId] }
+            comment.id === id && !comment.likedClients.includes(clientId)
+              ? {
+                  ...comment,
+                  likes: comment.likes + 1,
+                  likedClients: [...comment.likedClients, clientId],
+                }
               : comment
           )
         );
@@ -286,18 +302,27 @@ function App() {
       const [removed] = newItems.splice(result.source.index, 1);
       console.log(removed);
       newItems.splice(result.destination.index, 0, removed);
+      for (var i = 0; i < newItems.length; i++) {
+        newItems[i]["drag_id"] = i;
+      }
       setWorkedWell(newItems);
     } else if (result.draggableId.includes("questions")) {
       const newItems = [...questions];
       const [removed] = newItems.splice(result.source.index, 1);
       console.log(removed);
       newItems.splice(result.destination.index, 0, removed);
+      for (var i = 0; i < newItems.length; i++) {
+        newItems[i]["drag_id"] = i;
+      }
       setQuestions(newItems);
     } else if (result.draggableId.includes("improvements")) {
       const newItems = [...improvements];
       const [removed] = newItems.splice(result.source.index, 1);
       console.log(removed);
       newItems.splice(result.destination.index, 0, removed);
+      for (var i = 0; i < newItems.length; i++) {
+        newItems[i]["drag_id"] = i;
+      }
       setImprovements(newItems);
     }
   };
