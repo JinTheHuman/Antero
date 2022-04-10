@@ -50,7 +50,6 @@
   padding-bottom: 0.9vh;
   border-top: rgb(229, 229, 229) solid 1px;
   border-bottom: 1px rgb(229, 229, 229) solid;
-  align-items: center;
   padding-left: 0.7vw;
 }
 
@@ -66,4 +65,5 @@ a {
 
 .arrow {
   color: gray;
+  vertical-align: middle;
 }

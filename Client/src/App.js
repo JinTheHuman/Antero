@@ -1,11 +1,10 @@
 import Header from "./Components/Header";
 import Column from "./Components/Column";
-import Comments from "./Components/Comments";
 import ExportRow from "./Components/ExportRow";
 import { DragDropContext } from "react-beautiful-dnd";
 import React, { useState, useEffect } from "react";
 import Confirm from "./Components/Confirm";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 
 function App() {
   // SOCKET STUFF
@@ -17,7 +16,7 @@ function App() {
     const newSocket = io(`http://${window.location.hostname}:5000`);
     setSocket(newSocket);
     return () => newSocket.close();
-  }, [setSocket])
+  }, [setSocket]);
 
 
   // SOCKET STUFF
@@ -59,7 +58,8 @@ function App() {
   ]);
   const [toDo, setToDo] = useState([]);
 
-  const [nextId, setNextId] = useState(4);
+  const [nextId, setNextId] = useState(0);
+  const [nextCheckBoxId, setNextCheckBoxId] = useState(0);
 
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -102,29 +102,45 @@ function App() {
       setNextId(SERVER[5]);
     })
 
-    socket.on("receive-stage", (stageSERVER)=>{
+    socket.on("receive-stage", (stageSERVER) => {
       console.log("receiving stage", stageSERVER);
       setStage(stageSERVER);
     })
+
+    // socket.on("receive-new-retro", () => {
+    //   console.log("receiving new retro");
+    //   setImprovements([]);
+    //   setQuestions([]);
+    //   setWorkedWell([]);
+    //   setToDo([]);
+    // })
   }
 
   const changeState = (inputStage) => {
     console.log("this is called ", inputStage);
     if (inputStage === "new") {
       socket.emit("change-stage", 1);
+      socket.emit("newRetro");
+      setImprovements([]);
+      setQuestions([]);
+      setWorkedWell([]);
+      setToDo([]);
+      setNextId(0);
       setStage(1);
     } else if (inputStage === "back") {
-      socket.emit("change-stage", 4);
+      // socket.emit("change-stage", 4);
       setStage(4);
     } else {
-      socket.emit("change-stage", stage + 1);
+      if (stage != 4) {
+        socket.emit("change-stage", stage + 1);
+      }
       setStage(stage + 1);
     }
     setShowConfirm(false);
-  }
+  };
 
   const updateConfirm = (inputStage) => {
-    if (showConfirm == false) {
+    if (showConfirm === false) {
       if (stage === 1 || stage === 2) {
         setShowConfirm(true);
       } else {
@@ -133,19 +149,19 @@ function App() {
     } else {
       setShowConfirm(false);
     }
-
-  }
+  };
 
   const addImprovement = (inputText) => {
     console.log("adding improvement now");
     setNextId(nextId + 1);
     const newImprovement = {
       index: nextId,
-      id: "droppable-" + nextId,
-      likedClients: [],
+      id: "improvements-" + nextId,
       text: inputText,
       likes: 0,
+      likedClients: [],
       column: "improvements",
+      drag_id: improvements.length,
     };
     setImprovements([...improvements, newImprovement]);
     socket.emit("addComment", newImprovement);
@@ -156,13 +172,14 @@ function App() {
     setNextId(nextId + 1);
     const newQuestion = {
       index: nextId,
-      id: "droppable-" + nextId,
-      likedClients: [],
+      id: "questions-" + nextId,
       text: inputText,
       likes: 0,
+      likedClients: [],
       column: "questions",
+      drag_id: questions.length,
     };
-    
+
     setQuestions([...questions, newQuestion]);
     socket.emit("addComment", newQuestion);
   };
@@ -170,18 +187,21 @@ function App() {
     setNextId(nextId + 1);
     const newWorkedWell = {
       index: nextId,
-      id: "droppable-" + nextId,
-      likedClients: [],
+      id: "workedWell-" + nextId,
       text: inputText,
       likes: 0,
+      likedClients: [],
       column: "workedWell",
+      drag_id: workedWell.length,
     };
     setWorkedWell([...workedWell, newWorkedWell]);
     socket.emit("addComment", newWorkedWell);
   };
   const addToDo = (inputText) => {
-    const newToDo = { text: inputText, checked: false, column: "toDo" };
+    setNextCheckBoxId(nextCheckBoxId + 1)
+    const newToDo = { text: inputText, checked: false, column: "toDo", id: nextCheckBoxId };
     setToDo([...toDo, newToDo]);
+
     socket.emit("addComment", newToDo);
   };
 
@@ -201,7 +221,7 @@ function App() {
         console.log(workedWell);
         break;
       case "toDo":
-        setToDo(toDo.filter((comment) => comment.id != id));
+        setToDo(toDo.filter((comment) => comment.id !== id));
         console.log(toDo);
         break;
       default:
@@ -251,7 +271,7 @@ function App() {
 
   const dragEnded = (result) => {
     console.log(result);
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
     if (!destination) {
       return;
     }
@@ -261,11 +281,26 @@ function App() {
     ) {
       return;
     }
-
-    const column = this.state.columns[source.droppableId];
-    const newTaskIds = Array.from(column.Ids);
-
-  }
+    if (result.draggableId.includes("workedWell")) {
+      const newItems = [...workedWell];
+      const [removed] = newItems.splice(result.source.index, 1);
+      console.log(removed);
+      newItems.splice(result.destination.index, 0, removed);
+      setWorkedWell(newItems);
+    } else if (result.draggableId.includes("questions")) {
+      const newItems = [...questions];
+      const [removed] = newItems.splice(result.source.index, 1);
+      console.log(removed);
+      newItems.splice(result.destination.index, 0, removed);
+      setQuestions(newItems);
+    } else if (result.draggableId.includes("improvements")) {
+      const newItems = [...improvements];
+      const [removed] = newItems.splice(result.source.index, 1);
+      console.log(removed);
+      newItems.splice(result.destination.index, 0, removed);
+      setImprovements(newItems);
+    }
+  };
 
   if (stage !== 5) {
     return (
@@ -274,20 +309,27 @@ function App() {
 
         <div className="Columns">
           <DragDropContext onDragEnd={dragEnded}>
-            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+            <div
+              style={
+                stage === 4 ? { pointerEvents: "none", opacity: "0.4" } : {}
+              }
+            >
               <Column
-              topic={"It worked well that..."}
-              comments={workedWell}
-              onClicked={likedComment}
-              onDelete={deleteComment}
-              addComment={addWorkedWell}
-              stage={stage}
+                topic={"It worked well that..."}
+                comments={workedWell}
+                onClicked={likedComment}
+                onDelete={deleteComment}
+                addComment={addWorkedWell}
+                stage={stage}
               />
             </div>
-
           </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
-            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+            <div
+              style={
+                stage === 4 ? { pointerEvents: "none", opacity: "0.4" } : {}
+              }
+            >
               <Column
                 topic={"We could improve..."}
                 comments={improvements}
@@ -299,7 +341,11 @@ function App() {
             </div>
           </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
-            <div style={stage===4 ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+            <div
+              style={
+                stage === 4 ? { pointerEvents: "none", opacity: "0.4" } : {}
+              }
+            >
               <Column
                 topic={"I want to ask about..."}
                 comments={questions}
@@ -309,7 +355,7 @@ function App() {
                 stage={stage}
               />
             </div>
-          </DragDropContext> 
+          </DragDropContext>
           <DragDropContext onDragEnd={dragEnded}>
             <Column
               topic={"We need to do..."}
@@ -320,9 +366,14 @@ function App() {
             />
           </DragDropContext>
         </div>
-        <Confirm show={showConfirm} stage={stage} changeStage={changeState} cancel={updateConfirm}></Confirm>
-      </div >
-    )
+        <Confirm
+          show={showConfirm}
+          stage={stage}
+          changeStage={changeState}
+          cancel={updateConfirm}
+        ></Confirm>
+      </div>
+    );
   } else {
     return (
       <div>
@@ -334,7 +385,8 @@ function App() {
           <ExportRow topic={"Others"} content={questions} />
           <ExportRow topic={"Action Items"} content={toDo} />
         </div>
-      </div >)
+      </div>
+    );
   }
 }
 

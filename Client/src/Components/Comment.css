@@ -15,12 +15,16 @@
   user-select: none;
 }
 
-.check-box {
-  margin-right: auto;
+.check-box-txt {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 18vw;
+}
+
+.checkbox {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .text {
